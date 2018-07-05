@@ -9,7 +9,7 @@
 - mbedTLS のパッケージを -static-libgcc オプションを指定してビルドすることで、  
   libgcc_s_seh-1.dll に依存しない mbedTLS の dll を生成します。
 
-- また、Gauche のビルドオプションに mbedtls の使用を指定し、  
+- また、Gauche のビルドオプションに --with-tls=axtls,mbedtls を指定し、  
   インストール先フォルダには mbedTLS の dll をコピーするようにします。
 
 
@@ -82,7 +82,7 @@
    pacman -U mingw-w64-i686-mbedtls-2.9.0-1-any.pkg.tar.xz
    ```
 
-6. Gauche のビルドスクリプトの生成  
+6. Gauche のビルドスクリプトの書き換え  
    ＜MSYS2/MinGW-w64 (64bit) 環境の場合＞  
    プログラムメニューから MSYS2 の MinGW-w64 Win64 Shell を起動して、以下のコマンドを実行してください。  
    ＜MSYS2/MinGW-w64 (32bit) 環境の場合＞  
@@ -92,16 +92,14 @@
    cd /c/work/Gauche
    ./2001_modify-mingw-dist.sh
    ```
-   成功すると、src フォルダ内に mingw-dist-mbedtls.sh というファイルが生成されます。
+   成功すると、src フォルダの mingw-dist.sh というファイルが書き換えられます。  
+   変更前のファイルは mingw-dist_orig.sh という名前で残ります。
 
 7. Gauche のビルド  
    Gauche のビルドを行ってください。  
    以下のページを参照して、  
    「5. Gauche のコンパイル」以後を実施ください。  
-   https://gist.github.com/Hamayama/6666e5d2c8d5167d22f7  
-   **(注意) このとき、「5. Gauche のコンパイル」 では、  
-   src/mingw-dist.sh ではなく src/mingw-dist-mbedtls.sh を実行してください。  
-   (ここを変更しないと mbedtls 非対応の Gauche ができてしまうため 注意してください)**
+   https://gist.github.com/Hamayama/6666e5d2c8d5167d22f7
 
 8. 動作確認  
    https://curl.haxx.se/ca/cacert.pem  
@@ -162,6 +160,7 @@
 
 ## 履歴
 - 2018-7-6   v1.00 (初版)
+- 2018-7-6   v1.01 mingw-dist.sh のリネームをやめた
 
 
 (2018-7-6)

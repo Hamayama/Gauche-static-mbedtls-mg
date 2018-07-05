@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # 2001_modify-mingw-dist.sh
-# 2018-7-6 v1.00
+# 2018-7-6 v1.01
 
 set -e
 
 ##### settings #####
-MINGW_DIST_ORIG=src/mingw-dist.sh
-MINGW_DIST_NEW=src/mingw-dist-mbedtls.sh
+MINGW_DIST_FILE=src/mingw-dist.sh
+MINGW_DIST_BKUP=src/mingw-dist_orig.sh
 MBEDTLS_DLL="libmbedcrypto.dll libmbedtls.dll libmbedx509.dll"
 
 ##### functions #####
@@ -23,21 +23,30 @@ function do_check_file {
     fi
 }
 
-function do_patch_to_file {
-    local patch_file="$2"
-    local sed_text1
+function do_backup_file {
+    if [ ! -f "$2" ]; then
+        cp "$1" "$2"
+    fi
+}
 
-    cp "$1" "$patch_file"
+function do_patch_to_file {
+    local patch_file="$1"
+    local sed_text1
+    local sed_text2
 
     # add configure option
-    cp $patch_file $patch_file.bak
-    sed -e 's@\(--with-tls=axtls\)@\1,mbedtls@' $patch_file.bak > $patch_file
+    if ! grep -q -e '--with-tls=axtls,mbedtls' $patch_file; then
+        cp $patch_file $patch_file.bak
+        sed -e 's@\(--with-tls=axtls\)@\1,mbedtls@' $patch_file.bak > $patch_file
+    fi
 
     # add library files
-    cp $patch_file $patch_file.bak
-    sed_text1='s@\(libwinpthread-1.dll\)@\1 '
-    sed_text2='@'
-    sed -e "$sed_text1$MBEDTLS_DLL$sed_text2" $patch_file.bak > $patch_file
+    if ! grep -q -e "$MBEDTLS_DLL" $patch_file; then
+        cp $patch_file $patch_file.bak
+        sed_text1='s@\(libwinpthread-1.dll\)@\1 '
+        sed_text2='@'
+        sed -e "$sed_text1$MBEDTLS_DLL$sed_text2" $patch_file.bak > $patch_file
+    fi
 
     rm -f $patch_file.bak
 }
@@ -50,8 +59,9 @@ while [ "$#" -gt 0 ]; do
     esac
 done
 
-do_check_file    $MINGW_DIST_ORIG
-do_patch_to_file $MINGW_DIST_ORIG $MINGW_DIST_NEW
+do_check_file    $MINGW_DIST_FILE
+do_backup_file   $MINGW_DIST_FILE $MINGW_DIST_BKUP
+do_patch_to_file $MINGW_DIST_FILE
 
-echo "File '$MINGW_DIST_NEW' is generated successfully."
+echo "File '$MINGW_DIST_FILE' is modified successfully."
 

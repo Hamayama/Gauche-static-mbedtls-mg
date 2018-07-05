@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 1001_make-static-mbedtls-package.sh
-# 2018-7-6 v1.00
+# 2018-7-6 v1.01
 
 set -e
 
