@@ -30,9 +30,9 @@
 3. 本ツールのダウンロードとコピー  
    本サイト ( https://github.com/Hamayama/Gauche-static-mbedtls-mg ) のファイルを、  
    (Download Zip ボタン等で) ダウンロードして、適当なフォルダに展開してください。  
-   そして中の 1001_make-static-mbedtls-package.sh というファイルを、  
-   `2.` で展開したパッケージリストのフォルダ内の mingw-w64-mbedtls というフォルダにコピーしてください。  
-   また、2001_modify-mingw-dist.sh というファイルを、  
+   そして中の `1001_make-static-mbedtls-package.sh` というファイルを、  
+   `2.` で展開したパッケージリストのフォルダ内の `mingw-w64-mbedtls` というフォルダにコピーしてください。  
+   また、`2001_modify-mingw-dist.sh` というファイルを、  
    `1.` で展開した Gauche のソースのトップフォルダにコピーしてください。
 
 4. パッケージファイルの作成  
@@ -59,6 +59,10 @@
    スタンドアロン版を https://cmake.org/download/ から入手してインストールしてください。  
    そして、スタンドアロン版を使用する場合には、  
    ./1001_make-static-mbedtls-package.sh のオプションに --use-standalone-cmake を指定してください。**
+   
+   **(注意) ドキュメントのインストールが必要な場合には、  
+   ./1001_make-static-mbedtls-package.sh のオプションに --include-documents を指定してください。  
+   (この場合 doxygen というツールが必要なようです)**
 
 5. パッケージのインストール  
    ＜MSYS2/MinGW-w64 (64bit) 環境の場合＞  
@@ -101,9 +105,9 @@
 
 8. 動作確認  
    https://curl.haxx.se/ca/cacert.pem  
-   にアクセスして、CA証明書ファイルを入手し、適当なフォルダに配置してください。  
+   にアクセスして、CA証明書ファイル を入手し、適当なフォルダに配置してください。  
    その後、Gauche (gosh.exe) を起動して、以下を実行してください。  
-   ( c:\work\ca\ に CA証明書ファイルを配置した場合)
+   ( c:\work\ca\ に CA証明書ファイル を配置した場合)
    ```
    (use rfc.tls)
    (default-tls-class <mbed-tls>)
@@ -134,11 +138,11 @@
    `mkgroup -c -l > /etc/group` を実行して `/etc/group` を作成し、  
    このファイル内の `なし` となっている部分を `None` に置換してください。  
    
-   そして、シェルを再起動すると、ファイルの所属グループ名が `None` になり、  
+   そして、シェルを再起動すると、ファイルの所属グループ名が None になり、  
    上記警告は出なくなります。  
    
    ただし、Windows の ユーザアカウントのグループを追加/変更/削除した場合には、  
-   `/etc/group` も更新が必要とのことです。  
+   /etc/group も更新が必要とのことです。  
    
    ＜参考URL＞  
    https://mattn.kaoriya.net/software/msys/20170519195436.htm
