@@ -4,10 +4,9 @@
 
 ## 概要
 - Gauche で MSYS2/MinGW-w64 (64bit/32bit) 環境の mbedTLS を使用可能にするためのツールです。  
-  実行にはビルドのための開発環境が必要です。
+  実行にはビルドのための開発環境とインターネット接続が必要です。
 
-- mbedTLS のパッケージを、-static-libgcc オプションを指定してビルドすることで、  
-  libgcc_s_seh-1.dll に依存しないようにします。
+- 本ツールは、libgcc_s_seh-1.dll に依存しない mbedTLS のパッケージを生成します。
 
 - また、Gauche のビルドスクリプトを書き換えて、mbedTLS のサポートを有効にします。
 
@@ -41,6 +40,9 @@
    |---|---|
    |mingw-w64-x86_64-mbedtls-2.9.0-1-any.pkg.tar.xz|64bit環境用のパッケージファイル|
    |mingw-w64-i686-mbedtls-2.9.0-1-any.pkg.tar.xz  |32bit環境用のパッケージファイル|
+   
+   **(注意) 実行にはインターネット接続が必要です。  
+   ( https://github.com/Alexpux/MINGW-packages にアクセスします )**  
    
    **(注意) 実行には CMake が必要です。存在しない場合には pacman 経由で入れるか、  
    スタンドアロン版を https://cmake.org/download/ から入手してインストールしてください。  
