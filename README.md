@@ -6,8 +6,8 @@
 - Gauche で MSYS2/MinGW-w64 (64bit/32bit) 環境の mbedTLS を使用可能にするためのツールです。  
   実行にはビルドのための開発環境が必要です。
 
-- mbedTLS のパッケージを -static-libgcc オプションを指定してビルドすることで、  
-  libgcc_s_seh-1.dll に依存しない mbedTLS の dll を生成します。
+- mbedTLS のパッケージを、-static-libgcc オプションを指定してビルドすることで、  
+  libgcc_s_seh-1.dll に依存しないようにします。
 
 - また、Gauche のビルドスクリプトを書き換えて、mbedTLS のサポートを有効にします。
 
@@ -34,7 +34,7 @@
    また、`2001_modify-mingw-dist.sh` というファイルを、  
    `1.` で展開した Gauche のソースのトップフォルダにコピーしてください。
 
-4. パッケージファイルの作成  
+4. mbedTLS のパッケージファイルの作成  
    シェルからコマンドを実行します。  
    ＜MSYS2/MinGW-w64 (64bit) 環境の場合＞  
    プログラムメニューから MSYS2 の MinGW-w64 Win64 Shell を起動して、以下のコマンドを実行してください。  
@@ -57,15 +57,17 @@
    **(注意) 実行には CMake が必要です。存在しない場合には pacman 経由で入れるか、  
    スタンドアロン版を https://cmake.org/download/ から入手してインストールしてください。  
    そして、スタンドアロン版を使用する場合には、  
-   ./1001_make-static-mbedtls-package.sh のオプションに --use-standalone-cmake を指定してください。  
-   (スタンドアロン版の cmake には PATH が通っている必要があります)**
+   上記 ./1001_make-static-mbedtls-package.sh コマンドのオプションに  
+   --use-standalone-cmake を指定してください。  
+   (スタンドアロン版の cmake には PATH が通っている必要があります)**  
    
    **(注意) ドキュメントのインストールも必要な場合には、  
-   ./1001_make-static-mbedtls-package.sh のオプションに --include-documents を指定してください。  
+   上記 ./1001_make-static-mbedtls-package.sh コマンドのオプションに  
+   --include-documents を指定してください。  
    (この場合 doxygen というツールが必要です)**
 
-5. パッケージのインストール  
-   生成したパッケージを、開発環境にインストールします。  
+5. mbedTLS のパッケージのインストール  
+   生成した mbedTLS のパッケージを、開発環境にインストールします。  
    ＜MSYS2/MinGW-w64 (64bit) 環境の場合＞  
    プログラムメニューから MSYS2 の MinGW-w64 Win64 Shell を起動して、以下のコマンドを実行してください。  
    ( c:\work にパッケージリストを展開した場合)
