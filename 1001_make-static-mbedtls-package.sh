@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # 1001_make-static-mbedtls-package.sh
-# 2018-7-6 v1.03
+# 2018-7-7 v1.04
 
 set -e
 
 ##### settings #####
-MINGW_PKGS_URL=https://github.com/Alexpux/MINGW-packages/archive/master.zip
+MINGW_PKGS_URL=https://github.com/Alexpux/MINGW-packages/archive/master.tar.gz
 MINGW_PKGS_TARBALL=MINGW-packages.tar.gz
 TARGET_PKG_DIR=MINGW-packages-master/mingw-w64-mbedtls
 
@@ -42,7 +42,7 @@ function do_download {
 }
 
 function do_extract {
-    if ! bsdtar xvfz "$1" "$2"; then
+    if ! tar xvfz "$1" "$2"; then
         echo "Extract '$1' failed.  Aborting."; exit 1
     fi
 }
