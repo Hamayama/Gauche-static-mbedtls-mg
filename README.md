@@ -20,37 +20,25 @@
    「3. Gauche のソースのダウンロードと展開」までを実施ください。  
    https://gist.github.com/Hamayama/6666e5d2c8d5167d22f7
 
-2. MSYS2/MinGW-w64 (64bit/32bit) 環境のパッケージリストの取得  
-   https://github.com/Alexpux/MINGW-packages  
-   からパッケージリスト全体を (Download ZIP ボタン等で) ダウンロードして、  
-   適当なフォルダに展開してください。  
-   (2018-7-6 時点で zip ファイルのサイズは 8 MB 程度です)
-
-3. 本ツールのダウンロードとコピー  
+2. 本ツールのダウンロードと展開  
    本サイト ( https://github.com/Hamayama/Gauche-static-mbedtls-mg ) のファイルを、  
-   (Download Zip ボタン等で) ダウンロードして、適当なフォルダに展開してください。  
-   そして中の `1001_make-static-mbedtls-package.sh` というファイルを、  
-   `2.` で展開したパッケージリストのフォルダ内の `mingw-w64-mbedtls` というフォルダにコピーしてください。  
-   また、`2001_modify-mingw-dist.sh` というファイルを、  
-   `1.` で展開した Gauche のソースのトップフォルダにコピーしてください。
+   (Download Zip ボタン等で) ダウンロードして、適当なフォルダに展開してください。
 
-4. mbedTLS のパッケージファイルの作成  
+3. mbedTLS のパッケージファイルの作成  
    シェルからコマンドを実行します。  
    ＜MSYS2/MinGW-w64 (64bit) 環境の場合＞  
    プログラムメニューから MSYS2 の MinGW-w64 Win64 Shell を起動して、以下のコマンドを実行してください。  
    ＜MSYS2/MinGW-w64 (32bit) 環境の場合＞  
    プログラムメニューから MSYS2 の MinGW-w64 Win32 Shell を起動して、以下のコマンドを実行してください。  
-   ( c:\work にパッケージリストを展開した場合)
+   ( c:\work に本ツールを展開した場合)
    ```
-   cd /c/work/MINGW-packages-master/mingw-w64-mbedtls
+   cd /c/work/Gauche-static-mbedtls-mg
    ./1001_make-static-mbedtls-package.sh
    ```
-   途中でパッケージファイルを生成するか聞かれるので、y を入力します。  
    しばらくして処理が終了すると、以下のファイルがフォルダ内に生成されます。
    
    |<div align="center">生成ファイル</div>|<div align="center">内容</div>|
    |---|---|
-   |PKGBUILD_static1001                            |PKGBUILDファイルを変更したもの |
    |mingw-w64-x86_64-mbedtls-2.9.0-1-any.pkg.tar.xz|64bit環境用のパッケージファイル|
    |mingw-w64-i686-mbedtls-2.9.0-1-any.pkg.tar.xz  |32bit環境用のパッケージファイル|
    
@@ -66,22 +54,26 @@
    --include-documents を指定してください。  
    (この場合 doxygen というツールが必要です)**
 
-5. mbedTLS のパッケージのインストール  
+4. mbedTLS のパッケージのインストール  
    生成した mbedTLS のパッケージを、開発環境にインストールします。  
    ＜MSYS2/MinGW-w64 (64bit) 環境の場合＞  
    プログラムメニューから MSYS2 の MinGW-w64 Win64 Shell を起動して、以下のコマンドを実行してください。  
-   ( c:\work にパッケージリストを展開した場合)
+   ( c:\work に本ツールを展開した場合)
    ```
-   cd /c/work/MINGW-packages-master/mingw-w64-mbedtls
+   cd /c/work/Gauche-static-mbedtls-mg
    pacman -U mingw-w64-x86_64-mbedtls-2.9.0-1-any.pkg.tar.xz
    ```
    ＜MSYS2/MinGW-w64 (32bit) 環境の場合＞  
    プログラムメニューから MSYS2 の MinGW-w64 Win32 Shell を起動して、以下のコマンドを実行してください。  
-   ( c:\work にパッケージリストを展開した場合)
+   ( c:\work に本ツールを展開した場合)
    ```
-   cd /c/work/MINGW-packages-master/mingw-w64-mbedtls
+   cd /c/work/Gauche-static-mbedtls-mg
    pacman -U mingw-w64-i686-mbedtls-2.9.0-1-any.pkg.tar.xz
    ```
+
+5. Gauche のビルドスクリプト書き換えツールのコピー  
+   本ツールを展開したフォルダにある `2001_modify-mingw-dist.sh` というファイルを、  
+   `1.` で展開した Gauche のソースのトップフォルダにコピーしてください。
 
 6. Gauche のビルドスクリプトの書き換え  
    Gauche のビルドスクリプトを書き換えて、mbedTLS のサポートを有効にします。  
@@ -165,6 +157,7 @@
 - 2018-7-6   v1.00 (初版)
 - 2018-7-6   v1.01 mingw-dist.sh のリネームをやめた
 - 2018-7-6   v1.02 生成ファイル名見直し
+- 2018-7-6   v1.03 パッケージリストの取得を自動化
 
 
 (2018-7-6)

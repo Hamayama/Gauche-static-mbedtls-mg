@@ -1,20 +1,18 @@
 #!/bin/bash
 
 # 2001_modify-mingw-dist.sh
-# 2018-7-6 v1.02
+# 2018-7-6 v1.03
 
 set -e
 
 ##### settings #####
 MINGW_DIST_FILE=src/mingw-dist.sh
 MINGW_DIST_BKUP=src/mingw-dist_orig1001.sh
-MBEDTLS_DLL="libmbedcrypto.dll libmbedtls.dll libmbedx509.dll"
+LIB_DLL_FILES="libmbedcrypto.dll libmbedtls.dll libmbedx509.dll"
 
 ##### functions #####
 function usage {
-    cat <<"EOF"
-Usage: 2001_modify-mingw-dist.sh
-EOF
+    echo "Usage: 2001_modify-mingw-dist.sh"
 }
 
 function do_check_file {
@@ -42,11 +40,11 @@ function do_patch_to_file {
     fi
 
     # add library files
-    if ! grep -q -e "$MBEDTLS_DLL" $patch_file; then
+    if ! grep -q -e "$LIB_DLL_FILES" $patch_file; then
         cp $patch_file $patch_file.$bak
         sed_text1='s@\(libwinpthread-1.dll\)@\1 '
         sed_text2='@'
-        sed -e "$sed_text1$MBEDTLS_DLL$sed_text2" $patch_file.$bak > $patch_file
+        sed -e "$sed_text1$LIB_DLL_FILES$sed_text2" $patch_file.$bak > $patch_file
     fi
 
     rm -f $patch_file.$bak

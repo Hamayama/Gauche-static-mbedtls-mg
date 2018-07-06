@@ -1,26 +1,50 @@
 #!/bin/bash
 
 # 1001_make-static-mbedtls-package.sh
-# 2018-7-6 v1.02
+# 2018-7-6 v1.03
 
 set -e
 
 ##### settings #####
+MINGW_PKGS_URL=https://github.com/Alexpux/MINGW-packages/archive/master.zip
+MINGW_PKGS_TARBALL=MINGW-packages.tar.gz
+TARGET_PKG_DIR=MINGW-packages-master/mingw-w64-mbedtls
+
 PKGBUILD_ORIG=PKGBUILD
 PKGBUILD_NEW=PKGBUILD_static1001
+MAKEPKG=makepkg-mingw
+
 USE_STANDALONE_CMAKE=no
 INCLUDE_DOCUMENTS=no
+SKIP_DOWNLOAD=no
+PAUSE_BEFORE_MAKEPKG=no
 
 ##### functions #####
 function usage {
-    cat <<"EOF"
-Usage: 1001_make-static-mbedtls-package.sh [options]
-Options:
-    --use-standalone-cmake
-        Use standalone cmake instead of Mingw's one.
-    --include-documents
-        Include document files.
-EOF
+    echo "Usage: 1001_make-static-mbedtls-package.sh [options]"
+    echo "Options:"
+    echo "    --use-standalone-cmake"
+    echo "        Use standalone CMake instead of Mingw's one."
+    echo "    --include-documents"
+    echo "        Include document files."
+    echo "    --skip-download"
+    echo "        Skip download '$MINGW_PKGS_TARBALL'"
+    echo "    --pause-before-makepkg"
+    echo "        Pause before calling '$MAKEPKG'."
+}
+
+function do_download {
+    if [ ! "$SKIP_DOWNLOAD" = yes ]; then
+        if ! curl -f -L --progress-bar -o "$1" "$2"; then
+            echo "Download '$1' failed.  Aborting."; exit 1
+        fi
+    fi
+}
+
+function do_extract {
+    if ! bsdtar xvfz "$1" "$2"; then
+        echo "Extract '$1' failed.  Aborting."; exit 1
+    fi
 }
 
 function do_check_file {
@@ -76,22 +100,37 @@ while [ "$#" -gt 0 ]; do
             USE_STANDALONE_CMAKE=yes; shift;;
         --include-documents)
             INCLUDE_DOCUMENTS=yes; shift;;
+        --skip-download)
+            SKIP_DOWNLOAD=yes; shift;;
+        --pause-before-makepkg)
+            PAUSE_BEFORE_MAKEPKG=yes; shift;;
         *)  usage; exit 1;;
     esac
 done
+
+do_download $MINGW_PKGS_TARBALL $MINGW_PKGS_URL
+do_extract  $MINGW_PKGS_TARBALL $TARGET_PKG_DIR
+
+pwd_old=`pwd`
+cd $TARGET_PKG_DIR
 
 do_check_file    $PKGBUILD_ORIG
 do_patch_to_file $PKGBUILD_ORIG $PKGBUILD_NEW
 
 echo "File '$PKGBUILD_NEW' was generated successfully."
-echo -n "Do you want to make package now? [y/N]: "
-read ans < /dev/tty
-case "$ans" in
-    [yY]*) ;;
-    *) exit 0;;
-esac
+if [ "$PAUSE_BEFORE_MAKEPKG" = yes ]; then
+    echo -n "Do you want to make package now? [y/N]: "
+    read ans < /dev/tty
+    case "$ans" in
+        [yY]*) ;;
+        *) exit 0;;
+    esac
+fi
 
-makepkg-mingw -f -p $PKGBUILD_NEW
+$MAKEPKG -f -p $PKGBUILD_NEW
+
+cp -f *.pkg.tar.xz "$pwd_old"
+cd "$pwd_old"
 
 echo
 echo "Package files were generated successfully."
