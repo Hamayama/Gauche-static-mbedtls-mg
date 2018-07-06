@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # 1001_make-static-mbedtls-package.sh
-# 2018-7-6 v1.01
+# 2018-7-6 v1.02
 
 set -e
 
 ##### settings #####
 PKGBUILD_ORIG=PKGBUILD
-PKGBUILD_NEW=PKGBUILD_static
+PKGBUILD_NEW=PKGBUILD_static1001
 USE_STANDALONE_CMAKE=no
 INCLUDE_DOCUMENTS=no
 
@@ -31,40 +31,41 @@ function do_check_file {
 
 function do_patch_to_file {
     local patch_file="$2"
+    local bak="bak5001"
 
     cp "$1" "$patch_file"
 
     # add static link option
-    cp $patch_file $patch_file.bak
-    sed -e '/-DUSE_STATIC_MBEDTLS_LIBRARY=ON/a \    -DCMAKE_SHARED_LINKER_FLAGS="-static-libgcc" \\' $patch_file.bak > $patch_file
+    cp $patch_file $patch_file.$bak
+    sed -e '/-DUSE_STATIC_MBEDTLS_LIBRARY=ON/a \    -DCMAKE_SHARED_LINKER_FLAGS="-static-libgcc" \\' $patch_file.$bak > $patch_file
 
     # use standalone cmake
     if [ "$USE_STANDALONE_CMAKE" = yes ]; then
         # remove dependency to Mingw's cmake
-        cp $patch_file $patch_file.bak
-        sed -e 's@\("${MINGW_PACKAGE_PREFIX}-cmake"\)@#\1@' $patch_file.bak > $patch_file
+        cp $patch_file $patch_file.$bak
+        sed -e 's@\("${MINGW_PACKAGE_PREFIX}-cmake"\)@#\1@' $patch_file.$bak > $patch_file
         # remove path to cmake
-        cp $patch_file $patch_file.bak
-        sed -e 's@${MINGW_PREFIX}/bin/cmake@cmake@' $patch_file.bak > $patch_file
+        cp $patch_file $patch_file.$bak
+        sed -e 's@${MINGW_PREFIX}/bin/cmake@cmake@' $patch_file.$bak > $patch_file
     fi
 
     # not include documents
     if [ ! "$INCLUDE_DOCUMENTS" = yes ]; then
         # remove dependency to doxygen
-        cp $patch_file $patch_file.bak
-        sed -e 's@\("${MINGW_PACKAGE_PREFIX}-doxygen"\)@#\1@' $patch_file.bak > $patch_file
+        cp $patch_file $patch_file.$bak
+        sed -e 's@\("${MINGW_PACKAGE_PREFIX}-doxygen"\)@#\1@' $patch_file.$bak > $patch_file
         # skip make apidoc
-        cp $patch_file $patch_file.bak
-        sed -e 's@\(make apidoc\)@#\1@' $patch_file.bak > $patch_file
+        cp $patch_file $patch_file.$bak
+        sed -e 's@\(make apidoc\)@#\1@' $patch_file.$bak > $patch_file
         # skip make directory
-        cp $patch_file $patch_file.bak
-        sed -e 's@\(mkdir -p "${pkgdir}/${MINGW_PREFIX}/share/doc/${_realname}"\)@#\1@' $patch_file.bak > $patch_file
+        cp $patch_file $patch_file.$bak
+        sed -e 's@\(mkdir -p "${pkgdir}/${MINGW_PREFIX}/share/doc/${_realname}"\)@#\1@' $patch_file.$bak > $patch_file
         # skip copy documents
-        cp $patch_file $patch_file.bak
-        sed -e 's@\(cp -Rp apidoc "${pkgdir}/${MINGW_PREFIX}/share/doc/${_realname}/html"\)@#\1@' $patch_file.bak > $patch_file
+        cp $patch_file $patch_file.$bak
+        sed -e 's@\(cp -Rp apidoc "${pkgdir}/${MINGW_PREFIX}/share/doc/${_realname}/html"\)@#\1@' $patch_file.$bak > $patch_file
     fi
 
-    rm -f $patch_file.bak
+    rm -f $patch_file.$bak
 }
 
 ##### main #####
@@ -82,7 +83,7 @@ done
 do_check_file    $PKGBUILD_ORIG
 do_patch_to_file $PKGBUILD_ORIG $PKGBUILD_NEW
 
-echo "File '$PKGBUILD_NEW' is generated successfully."
+echo "File '$PKGBUILD_NEW' was generated successfully."
 echo -n "Do you want to make package now? [y/N]: "
 read ans < /dev/tty
 case "$ans" in
@@ -90,10 +91,10 @@ case "$ans" in
     *) exit 0;;
 esac
 
-makepkg-mingw -f -p "$PKGBUILD_NEW"
+makepkg-mingw -f -p $PKGBUILD_NEW
 
 echo
-echo "Package files are generated successfully."
+echo "Package files were generated successfully."
 echo "To install these packages, type as follows."
 echo "  pacman -U mingw-w64-xxx-mbedtls-yyy-any.pkg.tar.xz"
 echo "(xxx is arch-name. yyy is version.)"
