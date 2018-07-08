@@ -26,9 +26,9 @@
 3. mbedTLS のパッケージファイルの作成  
    シェルからコマンドを実行します。  
    ＜MSYS2/MinGW-w64 (64bit) 環境の場合＞  
-   プログラムメニューから MSYS2 の MinGW-w64 Win64 Shell を起動して、以下のコマンドを実行してください。  
+   プログラムメニューから MSYS2 の MinGW 64bit Shell を起動して、以下のコマンドを実行してください。  
    ＜MSYS2/MinGW-w64 (32bit) 環境の場合＞  
-   プログラムメニューから MSYS2 の MinGW-w64 Win32 Shell を起動して、以下のコマンドを実行してください。  
+   プログラムメニューから MSYS2 の MinGW 32bit Shell を起動して、以下のコマンドを実行してください。  
    ( c:\work に本ツールを展開した場合)
    ```
    cd /c/work/Gauche-static-mbedtls-mg
@@ -44,7 +44,7 @@
    **(注意) 実行にはインターネット接続が必要です。  
    ( https://github.com/Alexpux/MINGW-packages にアクセスします )**  
    
-   **(注意) 実行には CMake が必要です。存在しない場合には pacman 経由で入れるか、  
+   **(注意) 実行には CMake が必要です。存在しない場合には pacman 経由で入れるか、または  
    スタンドアロン版を https://cmake.org/download/ から入手してインストールしてください。  
    そして、スタンドアロン版を使用する場合には、  
    上記 ./1001_make-static-mbedtls-package.sh コマンドのオプションに  
@@ -54,19 +54,19 @@
    **(注意) ドキュメントのインストールも必要な場合には、  
    上記 ./1001_make-static-mbedtls-package.sh コマンドのオプションに  
    --include-documents を指定してください。  
-   (この場合 doxygen というツールが必要です)**
+   (この場合 Doxygen というツールが必要です)**
 
 4. mbedTLS のパッケージのインストール  
    生成した mbedTLS のパッケージを、開発環境にインストールします。  
    ＜MSYS2/MinGW-w64 (64bit) 環境の場合＞  
-   プログラムメニューから MSYS2 の MinGW-w64 Win64 Shell を起動して、以下のコマンドを実行してください。  
+   プログラムメニューから MSYS2 の MinGW 64bit Shell を起動して、以下のコマンドを実行してください。  
    ( c:\work に本ツールを展開した場合)
    ```
    cd /c/work/Gauche-static-mbedtls-mg
    pacman -U mingw-w64-x86_64-mbedtls-2.9.0-1-any.pkg.tar.xz
    ```
    ＜MSYS2/MinGW-w64 (32bit) 環境の場合＞  
-   プログラムメニューから MSYS2 の MinGW-w64 Win32 Shell を起動して、以下のコマンドを実行してください。  
+   プログラムメニューから MSYS2 の MinGW 32bit Shell を起動して、以下のコマンドを実行してください。  
    ( c:\work に本ツールを展開した場合)
    ```
    cd /c/work/Gauche-static-mbedtls-mg
@@ -80,9 +80,9 @@
 6. Gauche のビルドスクリプトの書き換え  
    Gauche のビルドスクリプトを書き換えて、mbedTLS のサポートを有効にします。  
    ＜MSYS2/MinGW-w64 (64bit) 環境の場合＞  
-   プログラムメニューから MSYS2 の MinGW-w64 Win64 Shell を起動して、以下のコマンドを実行してください。  
+   プログラムメニューから MSYS2 の MinGW 64bit Shell を起動して、以下のコマンドを実行してください。  
    ＜MSYS2/MinGW-w64 (32bit) 環境の場合＞  
-   プログラムメニューから MSYS2 の MinGW-w64 Win32 Shell を起動して、以下のコマンドを実行してください。  
+   プログラムメニューから MSYS2 の MinGW 32bit Shell を起動して、以下のコマンドを実行してください。  
    ( c:\work に Gauche のソースを展開した場合)
    ```
    cd /c/work/Gauche
@@ -163,4 +163,4 @@
 - 2018-7-7   v1.04 URL修正(zip → tar.gz)
 
 
-(2018-7-7)
+(2018-7-8)
