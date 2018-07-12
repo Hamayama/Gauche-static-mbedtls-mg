@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 1001_make-static-mbedtls-package.sh
-# 2018-7-7 v1.04
+# 2018-7-12 v1.05
 
 set -e
 
@@ -63,28 +63,28 @@ function do_patch_to_file {
     cp $patch_file $patch_file.$bak
     sed -e '/-DUSE_STATIC_MBEDTLS_LIBRARY=ON/a \    -DCMAKE_SHARED_LINKER_FLAGS="-static-libgcc" \\' $patch_file.$bak > $patch_file
 
-    # use standalone cmake
+    # use standalone CMake
     if [ "$USE_STANDALONE_CMAKE" = yes ]; then
-        # remove dependency to Mingw's cmake
+        # remove dependency to Mingw's CMake
         cp $patch_file $patch_file.$bak
         sed -e 's@\("${MINGW_PACKAGE_PREFIX}-cmake"\)@#\1@' $patch_file.$bak > $patch_file
-        # remove path to cmake
+        # remove path to CMake
         cp $patch_file $patch_file.$bak
         sed -e 's@${MINGW_PREFIX}/bin/cmake@cmake@' $patch_file.$bak > $patch_file
     fi
 
     # not include documents
     if [ ! "$INCLUDE_DOCUMENTS" = yes ]; then
-        # remove dependency to doxygen
+        # remove dependency to Doxygen
         cp $patch_file $patch_file.$bak
         sed -e 's@\("${MINGW_PACKAGE_PREFIX}-doxygen"\)@#\1@' $patch_file.$bak > $patch_file
-        # skip make apidoc
+        # skip 'make apidoc'
         cp $patch_file $patch_file.$bak
         sed -e 's@\(make apidoc\)@#\1@' $patch_file.$bak > $patch_file
-        # skip make directory
+        # skip making directory
         cp $patch_file $patch_file.$bak
         sed -e 's@\(mkdir -p "${pkgdir}/${MINGW_PREFIX}/share/doc/${_realname}"\)@#\1@' $patch_file.$bak > $patch_file
-        # skip copy documents
+        # skip copying documents
         cp $patch_file $patch_file.$bak
         sed -e 's@\(cp -Rp apidoc "${pkgdir}/${MINGW_PREFIX}/share/doc/${_realname}/html"\)@#\1@' $patch_file.$bak > $patch_file
     fi
