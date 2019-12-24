@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 1001_make-static-mbedtls-package.sh
-# 2018-7-12 v1.05
+# 2019-12-24 v1.06
 
 set -e
 
@@ -78,6 +78,11 @@ function do_patch_to_file {
         # remove dependency to Doxygen
         cp $patch_file $patch_file.$bak
         sed -e 's@\("${MINGW_PACKAGE_PREFIX}-doxygen"\)@#\1@' $patch_file.$bak > $patch_file
+        # remove dependency to Graphviz
+        cp $patch_file $patch_file.$bak
+        sed -e 's@\("${MINGW_PACKAGE_PREFIX}-graphviz"\)@#\1@' $patch_file.$bak > $patch_file
+        cp $patch_file $patch_file.$bak
+        sed -e '/\("${MINGW_PACKAGE_PREFIX}-graphviz"\)/a \             \)' $patch_file.$bak > $patch_file
         # skip 'make apidoc'
         cp $patch_file $patch_file.$bak
         sed -e 's@\(make apidoc\)@#\1@' $patch_file.$bak > $patch_file

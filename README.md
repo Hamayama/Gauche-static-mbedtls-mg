@@ -38,8 +38,8 @@
    
    |<div align="center">生成ファイル</div>|<div align="center">内容</div>|
    |---|---|
-   |mingw-w64-x86_64-mbedtls-2.9.0-1-any.pkg.tar.xz|64bit環境用のパッケージファイル|
-   |mingw-w64-i686-mbedtls-2.9.0-1-any.pkg.tar.xz  |32bit環境用のパッケージファイル|
+   |mingw-w64-x86_64-mbedtls-2.16.3-1-any.pkg.tar.xz|64bit環境用のパッケージファイル|
+   |mingw-w64-i686-mbedtls-2.16.3-1-any.pkg.tar.xz  |32bit環境用のパッケージファイル|
    
    **(注意) 実行にはインターネット接続環境が必要です。  
    ( https://github.com/Alexpux/MINGW-packages にアクセスします )**  
@@ -54,7 +54,7 @@
    **(注意) ドキュメントのインストールも必要な場合には、  
    上記 ./1001_make-static-mbedtls-package.sh コマンドのオプションに  
    --include-documents を指定してください。  
-   (この場合 Doxygen というツールが必要です)**
+   (この場合 Doxygen および Graphviz というツールが必要です)**
 
 4. mbedTLS のパッケージのインストール  
    生成した mbedTLS のパッケージを、開発環境にインストールします。  
@@ -63,14 +63,14 @@
    ( c:\work に本ツールを展開した場合)
    ```
    cd /c/work/Gauche-static-mbedtls-mg
-   pacman -U mingw-w64-x86_64-mbedtls-2.9.0-1-any.pkg.tar.xz
+   pacman -U mingw-w64-x86_64-mbedtls-2.16.3-1-any.pkg.tar.xz
    ```
    ＜MSYS2/MinGW-w64 (32bit) 環境の場合＞  
    プログラムメニューから MSYS2 の MinGW 32bit Shell を起動して、以下のコマンドを実行してください。  
    ( c:\work に本ツールを展開した場合)
    ```
    cd /c/work/Gauche-static-mbedtls-mg
-   pacman -U mingw-w64-i686-mbedtls-2.9.0-1-any.pkg.tar.xz
+   pacman -U mingw-w64-i686-mbedtls-2.16.3-1-any.pkg.tar.xz
    ```
 
 5. Gauche のビルドスクリプト書き換えツールのコピー  
@@ -148,13 +148,16 @@
 - OS
   - Windows 8.1 (64bit)
 - 環境
-  - MSYS2/MinGW-w64 (64bit/32bit) (gcc version 7.3.0 (Rev2, Built by MSYS2 project))
+  - MSYS2/MinGW-w64 (64bit/32bit) (gcc version 9.2.0 (Rev2, Built by MSYS2 project))
   - CMake v3.11.4
 - 言語
+  - Gauche v0.9.9
+  - Gauche v0.9.8
+  - Gauche v0.9.7
   - Gauche v0.9.6
 - パッケージ
-  - mingw-w64-x86_64-mbedtls 2.9.0-1
-  - mingw-w64-i686-mbedtls 2.9.0-1
+  - mingw-w64-x86_64-mbedtls 2.16.3-1
+  - mingw-w64-i686-mbedtls 2.16.3-1
 
 ## 履歴
 - 2018-7-6   v1.00 (初版)
@@ -163,6 +166,7 @@
 - 2018-7-6   v1.03 パッケージリストの取得を自動化
 - 2018-7-7   v1.04 URL修正(zip → tar.gz)
 - 2018-7-12  v1.05 コメント修正のみ
+- 2019-12-24 v1.06 パッケージのバージョンを更新(2.9.0-1 → 2.16.3-1)
 
 
-(2018-8-14)
+(2019-12-24)
