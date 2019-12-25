@@ -149,7 +149,7 @@
   - Windows 8.1 (64bit)
 - 環境
   - MSYS2/MinGW-w64 (64bit/32bit) (gcc version 9.2.0 (Rev2, Built by MSYS2 project))
-  - CMake v3.11.4
+  - CMake v3.16.2
 - 言語
   - Gauche v0.9.9
   - Gauche v0.9.8
@@ -169,4 +169,4 @@
 - 2019-12-24 v1.06 パッケージのバージョンを更新(2.9.0-1 → 2.16.3-1)
 
 
-(2019-12-24)
+(2019-12-25)
