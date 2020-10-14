@@ -3,12 +3,16 @@
 ![image](image.png)
 
 ## 概要
-- Gauche で MSYS2/MinGW-w64 (64bit/32bit) 環境の mbedTLS を使用可能にするためのツールです。  
+- Gauche で MSYS2/MinGW-w64 環境の mbedTLS を使用可能にするためのツールです。  
   実行にはビルドのための開発環境とインターネット接続環境が必要です。
 
 - 本ツールは、libgcc_s_seh-1.dll に依存しない mbedTLS のパッケージを生成します。
 
 - また、Gauche のビルドスクリプトを書き換えて、mbedTLS のサポートを有効にします。
+
+- **＜＜＜本ツールは、現在、使用できません (2020-10-14)＞＞＞  
+  代替方法としては、以下のページを参照ください。  
+  https://github.com/Hamayama/mbedtls-static-libgcc-package .**
 
 
 ## 実行手順
